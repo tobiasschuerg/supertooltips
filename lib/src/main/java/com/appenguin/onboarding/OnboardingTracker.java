@@ -1,4 +1,4 @@
-package com.nhaarman.supertooltips;
+package com.appenguin.onboarding;
 
 import android.content.Context;
 import android.content.SharedPreferences;

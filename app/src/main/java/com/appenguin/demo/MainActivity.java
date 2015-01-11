@@ -1,4 +1,4 @@
-package com.haarman.supertooltips;
+package com.appenguin.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,10 +6,10 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.nhaarman.supertooltips.OnboardingTracker;
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
+import com.appenguin.onboarding.OnboardingTracker;
+import com.appenguin.onboarding.ToolTip;
+import com.appenguin.onboarding.ToolTipRelativeLayout;
+import com.appenguin.onboarding.ToolTipView;
 
 public class MainActivity extends Activity implements View.OnClickListener, ToolTipView.OnToolTipViewClickedListener {
 

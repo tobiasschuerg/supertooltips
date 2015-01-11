@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.nhaarman.supertooltips;
+package com.appenguin.onboarding;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -25,9 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.nhaarman.supertooltips.exception.NoOverflowMenuRuntimeException;
-import com.nhaarman.supertooltips.exception.NoTitleViewRuntimeException;
-import com.nhaarman.supertooltips.exception.ViewNotFoundRuntimeException;
+import com.appenguin.onboarding.exception.NoOverflowMenuRuntimeException;
+import com.appenguin.onboarding.exception.NoTitleViewRuntimeException;
+import com.appenguin.onboarding.exception.ViewNotFoundRuntimeException;
 
 public class ToolTipRelativeLayout extends RelativeLayout {
 

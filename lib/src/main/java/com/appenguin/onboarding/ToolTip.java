@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nhaarman.supertooltips;
+package com.appenguin.onboarding;
 
 import android.graphics.Typeface;
 import android.view.View;

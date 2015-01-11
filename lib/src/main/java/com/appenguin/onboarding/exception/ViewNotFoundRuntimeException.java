@@ -1,4 +1,4 @@
-package com.nhaarman.supertooltips.exception;
+package com.appenguin.onboarding.exception;
 
 /**
  * A {@link RuntimeException} that is thrown if there is no {@link android.view.View}
