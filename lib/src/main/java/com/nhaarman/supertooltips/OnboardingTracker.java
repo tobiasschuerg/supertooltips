@@ -10,30 +10,60 @@ public class OnboardingTracker {
 
     private final static String DEFAULT_PREFS = "DEFAULT_PREFS";
     private final static String DISMISSED = "_DISMISSED";
-    private final static int MAX_VIEWS = 3;
 
     private boolean show = false;
     private Context context;
     private String id;
+    private int lastShow = 1;
+    private int firstShow = 0;
 
+    /**
+     * Creates a new OnboardingTracker with an id used to save the history in shared preferences.
+     */
     public OnboardingTracker (Context context, String id) {
         this.context = context;
         this.id = id;
-        init();
     }
 
-    private void init() {
+    /**
+     * Set the number of builds of this Tracker before the Tracker will set to show (zero-indexed).
+     *
+     * @return this OnboardingTracker to build upon.
+     */
+    public OnboardingTracker withFirstShow(int firstShow) {
+        this.firstShow = firstShow;
+        return this;
+    }
+
+    /**
+     * Set the number of builds of this Tracker before the Tracker will stop showing (zero-indexed).
+     *
+     * @return this OnboardingTracker to build upon.
+     */
+    public OnboardingTracker withLastShow(int lastShow) {
+        this.lastShow = lastShow;
+        return this;
+    }
+
+    /**
+     * The Tracker will calculate whether to show when built based on its history and the first and
+     * last show settings.
+     *
+     * @return this OnboardingTracker to build upon.
+     */
+    public OnboardingTracker build() {
         int currentCount = getTrackerCounter();
         boolean dismissed = getDismissedPref();
         show = shouldViewShow(currentCount, dismissed);
         incrementTrackerCounter(currentCount);
+        return this;
     }
 
     private boolean shouldViewShow(int currentCount, boolean dismissed) {
         if (dismissed) {
             return false;
         } else {
-            return !(currentCount >= MAX_VIEWS);
+            return ((firstShow <= currentCount) && (currentCount <= lastShow));
         }
     }
 

@@ -110,7 +110,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
     }
 
     private void addOrangeToolTipView() {
-        OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_app_launches));
+        OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_first_button))
+                .withFirstShow(1)
+                .withLastShow(3)
+                .build();
+
         ToolTip toolTip = new ToolTip()
                 .withText("Tap me!")
                 .withColor(getResources().getColor(R.color.holo_orange));

@@ -8,5 +8,6 @@
     <string name="blue">Blue</string>
     <string name="purple">Purple</string>
     <string name="orange">Orange</string>
-    <string name="tracker_app_launches">APP_LAUNCHES</string>
+
+    <string name="tracker_first_button">FIRST_BUTTON</string>
 </resources>
