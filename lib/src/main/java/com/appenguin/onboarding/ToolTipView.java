@@ -208,8 +208,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             Collection<Animator> animators = new ArrayList<>(5);
 
             if (mToolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
-                animators.add(ObjectAnimator.ofInt(this, TRANSLATION_Y_COMPAT, mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2, toolTipViewY));
-                animators.add(ObjectAnimator.ofInt(this, TRANSLATION_X_COMPAT, mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2, toolTipViewX));
+                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2, toolTipViewY));
+                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_X_COMPAT, mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2, toolTipViewX));
             } else if (mToolTip.getAnimationType() == ToolTip.AnimationType.FROM_TOP) {
                 animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, 0, toolTipViewY));
             }
@@ -271,8 +271,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         } else {
             Collection<Animator> animators = new ArrayList<>(5);
             if (mToolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
-                animators.add(ObjectAnimator.ofInt(this, TRANSLATION_Y_COMPAT, (int) getY(), mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2));
-                animators.add(ObjectAnimator.ofInt(this, TRANSLATION_X_COMPAT, (int) getX(), mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2));
+                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, (int) getY(), mRelativeMasterViewY + mView.getHeight() / 2 - getHeight() / 2));
+                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_X_COMPAT, (int) getX(), mRelativeMasterViewX + mView.getWidth() / 2 - mWidth / 2));
             } else {
                 animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, getY(), 0));
             }
