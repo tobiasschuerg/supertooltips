@@ -63,8 +63,19 @@ public class ToolTipRelativeLayout extends RelativeLayout {
      */
     public ToolTipView showToolTipForView(final ToolTip toolTip, final View view) {
         final ToolTipView toolTipView = new ToolTipView(getContext());
-        toolTipView.setToolTip(toolTip, view);
-        addView(toolTipView);
+        return addTooltipView(toolTip, view, toolTipView);
+    }
+
+    public ToolTipView showToolTipWithTracker(final ToolTip toolTip, final View view, OnboardingTracker tracker) {
+        final ToolTipView toolTipView = new ToolTipView(getContext(), tracker);
+        return addTooltipView(toolTip, view, toolTipView);
+    }
+
+    private ToolTipView addTooltipView(ToolTip toolTip, View view, ToolTipView toolTipView) {
+        if (toolTipView.isInitialised()) {
+            toolTipView.setToolTip(toolTip, view);
+            addView(toolTipView);
+        }
         return toolTipView;
     }
 
@@ -93,9 +104,7 @@ public class ToolTipRelativeLayout extends RelativeLayout {
             throw new ViewNotFoundRuntimeException();
         }
 
-        toolTipView.setToolTip(toolTip, view);
-        addView(toolTipView);
-        return toolTipView;
+        return addTooltipView(toolTip, view, toolTipView);
     }
 
     /**

@@ -58,6 +58,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private View mBottomFrame;
     private ImageView mBottomPointerView;
     private View mShadowView;
+    private OnboardingTracker tracker;
+
+    private boolean initialised = false;
 
     private ToolTip mToolTip;
     private View mView;
@@ -75,6 +78,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         init();
     }
 
+    public ToolTipView(final Context context, OnboardingTracker tracker) {
+        super(context);
+        this.tracker = tracker;
+        if (tracker.shouldShow()) {
+            init();
+        }
+    }
+
     private void init() {
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setOrientation(VERTICAL);
@@ -90,6 +101,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
+        initialised = true;
     }
 
     @Override
@@ -280,6 +292,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     @Override
     public void onClick(final View view) {
         remove();
+        if (tracker != null) {
+            tracker.setDismissedPref(true);
+        }
 
         if (mListener != null) {
             mListener.onToolTipViewClicked(this);
@@ -340,6 +355,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         } else {
             ViewHelper.setY(this, y);
         }
+    }
+
+    public boolean isInitialised() {
+        return initialised;
     }
 
     public interface OnToolTipViewClickedListener {

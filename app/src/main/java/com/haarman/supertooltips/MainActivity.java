@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.nhaarman.supertooltips.OnboardingTracker;
 import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
@@ -109,12 +110,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
     }
 
     private void addOrangeToolTipView() {
+        OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_app_launches));
         ToolTip toolTip = new ToolTip()
                 .withText("Tap me!")
                 .withColor(getResources().getColor(R.color.holo_orange));
 
-        mOrangeToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_orangetv));
-        mOrangeToolTipView.setOnToolTipViewClickedListener(this);
+        mOrangeToolTipView = mToolTipFrameLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
     }
 
     @Override
