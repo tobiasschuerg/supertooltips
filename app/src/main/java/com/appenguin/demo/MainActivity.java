@@ -9,23 +9,25 @@ import android.view.View;
 import com.appenguin.onboarding.OnboardingTracker;
 import com.appenguin.onboarding.ToolTip;
 import com.appenguin.onboarding.ToolTipRelativeLayout;
+import com.appenguin.onboarding.ToolTipSequence;
 import com.appenguin.onboarding.ToolTipView;
 
 public class MainActivity extends Activity implements View.OnClickListener, ToolTipView.OnToolTipViewClickedListener {
 
-    private ToolTipView mRedToolTipView;
-    private ToolTipView mGreenToolTipView;
-    private ToolTipView mBlueToolTipView;
-    private ToolTipView mPurpleToolTipView;
-    private ToolTipView mOrangeToolTipView;
-    private ToolTipRelativeLayout mToolTipFrameLayout;
+    private ToolTipView redToolTipView;
+    private ToolTipView greenToolTipView;
+    private ToolTipView blueToolTipView;
+    private ToolTipView purpleToolTipView;
+    private ToolTipView orangeToolTipView;
+    private ToolTipRelativeLayout toolTipFrameLayout;
+    private ToolTipSequence toolTipSequence;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolTipFrameLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipframelayout);
+        toolTipFrameLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipframelayout);
         findViewById(R.id.activity_main_redtv).setOnClickListener(this);
         findViewById(R.id.activity_main_greentv).setOnClickListener(this);
         findViewById(R.id.activity_main_bluetv).setOnClickListener(this);
@@ -68,6 +70,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
             }
         }, 1300);
 
+        OnboardingTracker sequenceTracker = new OnboardingTracker(this, "sequence").build();
+
+        toolTipSequence = new ToolTipSequence(sequenceTracker, toolTipFrameLayout);
+
     }
 
     private void addRedToolTipView() {
@@ -76,27 +82,28 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
                 .withColor(getResources().getColor(R.color.holo_red))
                 .withShadow();
 
-        mRedToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
-        mRedToolTipView.setOnToolTipViewClickedListener(this);
+        redToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
+        redToolTipView.start();
+        toolTipFrameLayout.addView(redToolTipView);
     }
 
     private void addGreenToolTipView() {
         ToolTip toolTip = new ToolTip()
-                .withText("Another beautiful Button!")
+                .withText("First")
                 .withColor(getResources().getColor(R.color.holo_green));
 
-        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_greentv));
-        mGreenToolTipView.setOnToolTipViewClickedListener(this);
+        greenToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_greentv));
+        toolTipSequence.addToSequence(greenToolTipView);
     }
 
     private void addBlueToolTipView() {
         ToolTip toolTip = new ToolTip()
-                .withText("Moarrrr buttons!")
+                .withText("Second")
                 .withColor(getResources().getColor(R.color.holo_blue))
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
-        mBlueToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_bluetv));
-        mBlueToolTipView.setOnToolTipViewClickedListener(this);
+        blueToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_bluetv));
+        toolTipSequence.addToSequence(blueToolTipView);
     }
 
     private void addPurpleToolTipView() {
@@ -105,8 +112,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
                 .withColor(getResources().getColor(R.color.holo_purple))
                 .withAnimationType(ToolTip.AnimationType.NONE);
 
-        mPurpleToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
-        mPurpleToolTipView.setOnToolTipViewClickedListener(this);
+        purpleToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
+        toolTipSequence.addToSequence(purpleToolTipView);
     }
 
     private void addOrangeToolTipView() {
@@ -116,53 +123,54 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
                 .build();
 
         ToolTip toolTip = new ToolTip()
-                .withText("Tap me!")
+                .withText("2nd to 4th Shows!")
                 .withColor(getResources().getColor(R.color.holo_orange));
 
-        mOrangeToolTipView = mToolTipFrameLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
+        orangeToolTipView = toolTipFrameLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
+        toolTipFrameLayout.addToolTipView(orangeToolTipView);
     }
 
     @Override
     public void onClick(final View view) {
         int id = view.getId();
         if (id == R.id.activity_main_redtv) {
-            if (mRedToolTipView == null) {
+            if (redToolTipView == null) {
                 addRedToolTipView();
             } else {
-                mRedToolTipView.remove();
-                mRedToolTipView = null;
+                redToolTipView.remove();
+                redToolTipView = null;
             }
 
         } else if (id == R.id.activity_main_greentv) {
-            if (mGreenToolTipView == null) {
+            if (greenToolTipView == null) {
                 addGreenToolTipView();
             } else {
-                mGreenToolTipView.remove();
-                mGreenToolTipView = null;
+                greenToolTipView.remove();
+                greenToolTipView = null;
             }
 
         } else if (id == R.id.activity_main_bluetv) {
-            if (mBlueToolTipView == null) {
+            if (blueToolTipView == null) {
                 addBlueToolTipView();
             } else {
-                mBlueToolTipView.remove();
-                mBlueToolTipView = null;
+                blueToolTipView.remove();
+                blueToolTipView = null;
             }
 
         } else if (id == R.id.activity_main_purpletv) {
-            if (mPurpleToolTipView == null) {
+            if (purpleToolTipView == null) {
                 addPurpleToolTipView();
             } else {
-                mPurpleToolTipView.remove();
-                mPurpleToolTipView = null;
+                purpleToolTipView.remove();
+                purpleToolTipView = null;
             }
 
         } else if (id == R.id.activity_main_orangetv) {
-            if (mOrangeToolTipView == null) {
+            if (orangeToolTipView == null) {
                 addOrangeToolTipView();
             } else {
-                mOrangeToolTipView.remove();
-                mOrangeToolTipView = null;
+                orangeToolTipView.remove();
+                orangeToolTipView = null;
             }
 
         }
@@ -170,16 +178,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Tool
 
     @Override
     public void onToolTipViewClicked(final ToolTipView toolTipView) {
-        if (mRedToolTipView == toolTipView) {
-            mRedToolTipView = null;
-        } else if (mGreenToolTipView == toolTipView) {
-            mGreenToolTipView = null;
-        } else if (mBlueToolTipView == toolTipView) {
-            mBlueToolTipView = null;
-        } else if (mPurpleToolTipView == toolTipView) {
-            mPurpleToolTipView = null;
-        } else if (mOrangeToolTipView == toolTipView) {
-            mOrangeToolTipView = null;
+        if (redToolTipView == toolTipView) {
+            redToolTipView = null;
+        } else if (greenToolTipView == toolTipView) {
+            greenToolTipView = null;
+        } else if (blueToolTipView == toolTipView) {
+            blueToolTipView = null;
+        } else if (purpleToolTipView == toolTipView) {
+            purpleToolTipView = null;
+        } else if (orangeToolTipView == toolTipView) {
+            orangeToolTipView = null;
         }
     }
 }

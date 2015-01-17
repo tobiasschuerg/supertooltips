@@ -75,18 +75,18 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     public ToolTipView(final Context context) {
         super(context);
-        init();
+       // initialiseView();
     }
 
     public ToolTipView(final Context context, OnboardingTracker tracker) {
         super(context);
         this.tracker = tracker;
         if (tracker.shouldShow()) {
-            init();
+            initialiseView();
         }
     }
 
-    private void init() {
+    private void initialiseView() {
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.tooltip, this, true);
@@ -102,6 +102,11 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
         initialised = true;
+    }
+
+    public void start() {
+        initialiseView();
+        initialiseToolTip();
     }
 
     @Override
@@ -124,7 +129,12 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     public void setToolTip(final ToolTip toolTip, final View view) {
         mToolTip = toolTip;
         mView = view;
+        if (initialised) {
+            initialiseToolTip();
+        }
+    }
 
+    private void initialiseToolTip() {
         if (mToolTip.getText() != null) {
             mToolTipTV.setText(mToolTip.getText());
         } else if (mToolTip.getTextResId() != 0) {
