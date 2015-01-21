@@ -1,48 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false"
-    tools:context=".MainActivity" >
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:orientation="vertical"
+    tools:context="com.appenguin.demo.MainActivity">
 
     <Button
-        android:id="@+id/activity_main_redtv"
+        android:id="@+id/tooltip_activity"
+        android:text="@string/tooltip_examples"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/red" />
+        android:onClick="startToolTipActivity"/>
 
     <Button
-        android:id="@+id/activity_main_greentv"
+        android:id="@+id/tracker_activity"
+        android:text="@string/tracker_examples"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="@string/green" />
+        android:onClick="startTrackerActivity"/>
 
     <Button
-        android:id="@+id/activity_main_bluetv"
+        android:id="@+id/listview_activity"
+        android:text="@string/listview_examples"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/blue" />
+        android:onClick="startListActivity"/>
 
-    <Button
-        android:id="@+id/activity_main_purpletv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/purple" />
-
-    <Button
-        android:id="@+id/activity_main_orangetv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/orange" />
-
-    <com.appenguin.onboarding.ToolTipRelativeLayout
-        android:id="@+id/activity_main_tooltipframelayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</RelativeLayout>
+</LinearLayout>
