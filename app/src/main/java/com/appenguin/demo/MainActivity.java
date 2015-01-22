@@ -3,8 +3,6 @@ package com.appenguin.demo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 
@@ -14,9 +12,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Button toolTipButton = (Button) findViewById(R.id.tooltip_activity);
-//        Button trackerButton = (Button) findViewById(R.id.tracker_activity);
-//        Button listViewButton = (Button) findViewById(R.id.listview_activity);
     }
 
     public void startToolTipActivity(View view) {

@@ -10,11 +10,10 @@ import com.appenguin.onboarding.ToolTip;
 public class ToolTipFactory {
 
     public static ToolTip getToolTipWithText(Context context, String text){
-        ToolTip toolTip = new ToolTip()
+        return new ToolTip()
                 .withText(text)
                 .withColor(context.getResources().getColor(R.color.holo_blue))
                 .withAnimationType(ToolTip.AnimationType.FROM_MASTER_VIEW)
                 .withShadow();
-        return toolTip;
     }
 }

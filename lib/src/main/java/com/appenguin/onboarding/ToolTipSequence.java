@@ -17,7 +17,7 @@ public class ToolTipSequence implements ToolTipView.OnToolTipViewClickedListener
     }
 
     public void addToSequence(ToolTipView toolTipView) {
-        if(sequence.isEmpty() && tracker.shouldShow())  {
+        if (sequence.isEmpty() && tracker.shouldShow()) {
             startToolTipView(toolTipView);
         }
         toolTipView.setOnToolTipViewClickedListener(this);

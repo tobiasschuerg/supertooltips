@@ -78,7 +78,7 @@ public class ToolTipRelativeLayout extends RelativeLayout {
     }
 
     public void addToolTipView(final ToolTipView toolTipView) {
-        final int delay = toolTipView.getmToolTip().getDelayInMilliseconds();
+        final int delay = toolTipView.getToolTip().getDelayInMilliseconds();
         if (toolTipView.shouldShow()) {
             if (delay == 0) {
                 addView(toolTipView);

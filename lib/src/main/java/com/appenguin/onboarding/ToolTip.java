@@ -20,22 +20,21 @@ import android.view.View;
 
 public class ToolTip {
 
-
-
     public enum AnimationType {
         FROM_MASTER_VIEW,
         FROM_TOP,
         NONE
     }
+
     private CharSequence mText;
 
-    private int mTextResId;
-    private int mColor;
-    private int mTextColor;
-    private View mContentView;
-    private AnimationType mAnimationType;
-    private boolean mShouldShowShadow;
-    private Typeface mTypeface;
+    private int textResId;
+    private int color;
+    private int textColor;
+    private View contentView;
+    private AnimationType animationType;
+    private boolean shouldShowShadow;
+    private Typeface typeface;
     private int delayInMilliseconds = 0;
 
     /**
@@ -43,11 +42,11 @@ public class ToolTip {
      */
     public ToolTip() {
         mText = null;
-        mTypeface = null;
-        mTextResId = 0;
-        mColor = 0;
-        mContentView = null;
-        mAnimationType = AnimationType.FROM_MASTER_VIEW;
+        typeface = null;
+        textResId = 0;
+        color = 0;
+        contentView = null;
+        animationType = AnimationType.FROM_MASTER_VIEW;
     }
 
     /**
@@ -57,7 +56,7 @@ public class ToolTip {
      */
     public ToolTip withText(final CharSequence text) {
         mText = text;
-        mTextResId = 0;
+        textResId = 0;
         return this;
     }
 
@@ -67,7 +66,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withText(final int resId) {
-        mTextResId = resId;
+        textResId = resId;
         mText = null;
         return this;
     }
@@ -78,7 +77,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withText(final int resId, final Typeface tf) {
-        mTextResId = resId;
+        textResId = resId;
         mText = null;
         withTypeface(tf);
         return this;
@@ -90,7 +89,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withColor(final int color) {
-        mColor = color;
+        this.color = color;
         return this;
     }
 
@@ -100,7 +99,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withTextColor(final int color) {
-        mTextColor = color;
+        textColor = color;
         return this;
     }
 
@@ -110,7 +109,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withContentView(final View view) {
-        mContentView = view;
+        contentView = view;
         return this;
     }
 
@@ -120,7 +119,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withAnimationType(final AnimationType animationType) {
-        mAnimationType = animationType;
+        this.animationType = animationType;
         return this;
     }
 
@@ -130,7 +129,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withShadow() {
-        mShouldShowShadow = true;
+        shouldShowShadow = true;
         return this;
     }
 
@@ -140,7 +139,7 @@ public class ToolTip {
      * @return this ToolTip to build upon.
      */
     public ToolTip withoutShadow() {
-        mShouldShowShadow = false;
+        shouldShowShadow = false;
         return this;
     }
 
@@ -158,7 +157,7 @@ public class ToolTip {
      * @param typeface the typeface to set
      */
     public void withTypeface(final Typeface typeface) {
-        mTypeface = typeface;
+        this.typeface = typeface;
     }
 
     public CharSequence getText() {
@@ -166,34 +165,34 @@ public class ToolTip {
     }
 
     public int getTextResId() {
-        return mTextResId;
+        return textResId;
     }
 
     public int getColor() {
-        return mColor;
+        return color;
     }
 
     public int getTextColor() {
-        return mTextColor;
+        return textColor;
     }
 
     public View getContentView() {
-        return mContentView;
+        return contentView;
     }
 
     public AnimationType getAnimationType() {
-        return mAnimationType;
+        return animationType;
     }
 
     public boolean shouldShowShadow() {
-        return mShouldShowShadow;
+        return shouldShowShadow;
     }
 
     /**
      * @return the typeface
      */
     public Typeface getTypeface() {
-        return mTypeface;
+        return typeface;
     }
 
     public int getDelayInMilliseconds() {
