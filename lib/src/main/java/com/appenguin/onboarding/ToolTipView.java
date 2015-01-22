@@ -75,7 +75,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     public ToolTipView(final Context context) {
         super(context);
-       // initialiseView();
+        initialiseView();
     }
 
     public ToolTipView(final Context context, OnboardingTracker tracker) {
@@ -102,6 +102,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setOnClickListener(this);
         getViewTreeObserver().addOnPreDrawListener(this);
         initialised = true;
+    }
+
+    public boolean shouldShow() {
+        return (tracker == null || tracker.shouldShow());
     }
 
     public void start() {
@@ -369,6 +373,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     public boolean isInitialised() {
         return initialised;
+    }
+
+    public ToolTip getmToolTip() {
+        return mToolTip;
+    }
+
+    public OnboardingTracker getTracker() {
+        return tracker;
     }
 
     public interface OnToolTipViewClickedListener {

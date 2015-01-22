@@ -2,6 +2,7 @@ package com.appenguin.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.appenguin.onboarding.OnboardingTracker;
 import com.appenguin.onboarding.ToolTip;
@@ -9,10 +10,11 @@ import com.appenguin.onboarding.ToolTipRelativeLayout;
 import com.appenguin.onboarding.ToolTipSequence;
 import com.appenguin.onboarding.ToolTipView;
 
-public class TrackerActivity extends Activity {
+public class TrackerActivity extends Activity implements View.OnClickListener {
 
     private ToolTipRelativeLayout toolTipFrameLayout;
     private ToolTipSequence toolTipSequence;
+    private ToolTipView delayToolTipView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -24,43 +26,48 @@ public class TrackerActivity extends Activity {
         OnboardingTracker sequenceTracker = new OnboardingTracker(this, "sequence").build();
         toolTipSequence = new ToolTipSequence(sequenceTracker, toolTipFrameLayout);
 
-        addRedToolTipView();
-        addGreenToolTipView();
-        addOrangeToolTipView();
-        addBlueToolTipView();
-        addPurpleToolTipView();
+        addDelayedToolTipView();
+        addSequenceOneToolTipView();
+        addTrackerToolTipView();
+        addSequenceTwoToolTipView();
+        addSequenceThreeToolTipView();
     }
 
-    private void addRedToolTipView() {
-        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "Todo");
+    private void addDelayedToolTipView() {
+        ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "You don't seem to have \n found this button yet!");
+        toolTip.withDelay(5000);
 
-        ToolTipView redToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
-        redToolTipView.start();
-        toolTipFrameLayout.addView(redToolTipView);
+        OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_delayed_button))
+                .build();
+
+        final View delayedButton = findViewById(R.id.activity_main_redtv);
+        delayedButton.setOnClickListener(this);
+        delayToolTipView = toolTipFrameLayout.showToolTipWithTracker(toolTip, delayedButton, tracker);
+        toolTipFrameLayout.addToolTipView(delayToolTipView);
     }
 
-    private void addGreenToolTipView() {
-        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "First");
+    private void addSequenceOneToolTipView() {
+        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "This is the first");
 
-        ToolTipView greenToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_greentv));
-        toolTipSequence.addToSequence(greenToolTipView);
+        ToolTipView sequenceOneToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_greentv));
+        toolTipSequence.addToSequence(sequenceOneToolTipView);
     }
 
-    private void addBlueToolTipView() {
-        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "Second");
+    private void addSequenceTwoToolTipView() {
+        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "In a sequence");
 
-        ToolTipView blueToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_bluetv));
-        toolTipSequence.addToSequence(blueToolTipView);
+        ToolTipView sequenceTwoToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_bluetv));
+        toolTipSequence.addToSequence(sequenceTwoToolTipView);
     }
 
-    private void addPurpleToolTipView() {
-        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "Final");
+    private void addSequenceThreeToolTipView() {
+        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "That is now done");
 
-        ToolTipView purpleToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
-        toolTipSequence.addToSequence(purpleToolTipView);
+        ToolTipView sequenceThreeToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
+        toolTipSequence.addToSequence(sequenceThreeToolTipView);
     }
 
-    private void addOrangeToolTipView() {
+    private void addTrackerToolTipView() {
         OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_first_button))
                 .withFirstShow(1)
                 .withLastShow(3)
@@ -68,8 +75,18 @@ public class TrackerActivity extends Activity {
 
         final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "Shows on 2nd to 4th views");
 
-        ToolTipView orangeToolTipView = toolTipFrameLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
-        toolTipFrameLayout.addToolTipView(orangeToolTipView);
+        ToolTipView trackerToolTipView = toolTipFrameLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
+        toolTipFrameLayout.addToolTipView(trackerToolTipView);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.activity_main_redtv) {
+            if (delayToolTipView != null) {
+                delayToolTipView.getTracker().setDismissedPref(true);
+            }
+        }
     }
 }
 

@@ -17,5 +17,6 @@
     <string name="title_activity_list">ListActivity</string>
     <string name="default_text">Default Text</string>
     <string name="tracker_list">TRACKER_LIST</string>
+    <string name="tracker_delayed_button">TRACKER_DELAYED_BUTTON</string>
 
 </resources>

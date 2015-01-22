@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,10 +77,26 @@ public class ToolTipRelativeLayout extends RelativeLayout {
         return toolTipView;
     }
 
-    public void addToolTipView(ToolTipView toolTipView) {
-        if(toolTipView.isInitialised()) {
-            addView(toolTipView);
+    public void addToolTipView(final ToolTipView toolTipView) {
+        final int delay = toolTipView.getmToolTip().getDelayInMilliseconds();
+        if (toolTipView.shouldShow()) {
+            if (delay == 0) {
+                addView(toolTipView);
+            } else {
+                addAfterDelay(toolTipView, delay);
+            }
         }
+    }
+
+    private void addAfterDelay(final ToolTipView toolTipView, int delay) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (toolTipView.shouldShow()) {
+                    addView(toolTipView);
+                }
+            }
+        }, delay);
     }
 
     /**

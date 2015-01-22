@@ -20,13 +20,15 @@ import android.view.View;
 
 public class ToolTip {
 
+
+
     public enum AnimationType {
         FROM_MASTER_VIEW,
         FROM_TOP,
         NONE
     }
-
     private CharSequence mText;
+
     private int mTextResId;
     private int mColor;
     private int mTextColor;
@@ -34,6 +36,7 @@ public class ToolTip {
     private AnimationType mAnimationType;
     private boolean mShouldShowShadow;
     private Typeface mTypeface;
+    private int delayInMilliseconds = 0;
 
     /**
      * Creates a new ToolTip without any values.
@@ -142,6 +145,16 @@ public class ToolTip {
     }
 
     /**
+     * Set a delay in milliseconds before ToolTip is shown.
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withDelay(int delayInMilliseconds) {
+        this.delayInMilliseconds = delayInMilliseconds;
+        return this;
+    }
+
+    /**
      * @param typeface the typeface to set
      */
     public void withTypeface(final Typeface typeface) {
@@ -181,5 +194,9 @@ public class ToolTip {
      */
     public Typeface getTypeface() {
         return mTypeface;
+    }
+
+    public int getDelayInMilliseconds() {
+        return delayInMilliseconds;
     }
 }

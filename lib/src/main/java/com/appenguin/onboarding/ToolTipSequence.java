@@ -40,7 +40,6 @@ public class ToolTipSequence implements ToolTipView.OnToolTipViewClickedListener
 
     private void startToolTipView(ToolTipView toolTipView) {
         if (toolTipView != null) {
-            toolTipView.start();
             layout.addView(toolTipView);
         }
     }

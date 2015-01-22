@@ -84,6 +84,7 @@ public class OnboardingTracker {
     public void setDismissedPref(boolean dismissed) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(id + DISMISSED, dismissed).commit();
+        show = false;
     }
 
     private boolean getDismissedPref() {
