@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,6 +167,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     private void applyToolTipPosition() {
+        final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
         final int[] masterViewScreenPosition = new int[2];
         view.getLocationOnScreen(masterViewScreenPosition);
 
@@ -185,9 +187,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         int toolTipViewAboveY = relativeMasterViewY - getHeight();
         int toolTipViewBelowY = Math.max(0, relativeMasterViewY + masterViewHeight);
 
-        int toolTipViewX = Math.max(0, relativeMasterViewCenterX - width / 2);
-        if (toolTipViewX + width > viewDisplayFrame.right) {
-            toolTipViewX = viewDisplayFrame.right - width;
+        int toolTipViewX = Math.max(margin, relativeMasterViewCenterX - width / 2);
+        if (toolTipViewX + width + margin > viewDisplayFrame.right) {
+            toolTipViewX = viewDisplayFrame.right - width - margin;
         }
 
         setX(toolTipViewX);
