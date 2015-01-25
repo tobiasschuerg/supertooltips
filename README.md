@@ -1,29 +1,37 @@
-SuperToolTips (Abandoned)
+Onboarding
 ===========
-[Play Store Demo][1] [![Build Status](https://travis-ci.org/nhaarman/supertooltips.svg?branch=master)](https://travis-ci.org/nhaarman/supertooltips)
 
-*This project has been abandoned. Feel free to fork this project, though no support will be given.*
-
-SuperToolTips is an Open Source Android library that allows developers to easily create Tool Tips for views.
-Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.
+Onboarding is an Open Source Android library that allows developers to easily create a non-intrusive
+first-use experience to teach users how to use your app without overloading and frustrating them.
 
 Setup
 -----
-*Note: SuperToolTips now uses the gradle build structure. If you want to use this project in Eclipse, you should make the necessary changes.*
+*Note: Onboarding uses the gradle build structure and can be easily imported from Maven Central
+with the following dependency.
 
 Add the following to your `build.gradle`:
 
 
 ```groovy
 dependencies {
-    compile 'com.nhaarman.supertooltips:library:3.0.+'
+    compile 'com.github.ryanjohn1:onboarding:1.0'
 }
 
 ```
 Usage
 -----
 
-* In your layout xml file, add the `ToolTipRelativeLayout` (`com.nhaarman.supertooltips.ToolTipRelativeLayout`) with height and width of `match_parent`. Make sure this view is on top!
+There is an example app in the library project showing some simple use cases over 3 different activities.
+* StandardToolTipActivity shows different types of ToolTips and how they appear relative to views.
+* TrackerActivity shows different uses for the OnboardingTracker object, making a ToolTip only appear
+after a certain number of views and never show again once dismissed. It also shows a sequence of three
+ToolTips that appear once the previous one is dismissed. Finally, there is an example of a ToolTip set
+to appear after a delay, only if the button to which it points hasn't been clicked by the user yet.
+* ListActivity shows a simple case of displaying a ToolTip for a view within a list item.
+
+
+To add a simple ToolTip relative to a View:
+* In your layout xml file, add the `ToolTipRelativeLayout` (`com.appenguin.onboarding.ToolTipRelativeLayout`) with height and width of `match_parent`. Make sure this view is on top!
 * Find the `ToolTipRelativeLayout` in your code, and start adding `ToolTips`!
 
 Example:
@@ -40,7 +48,7 @@ Example:
 	    android:layout_height="wrap_content"
 	    android:layout_centerInParent="true" />
 
-	<com.nhaarman.supertooltips.ToolTipRelativeLayout
+	<com.appenguin.onboarding.ToolTipRelativeLayout
 		android:id="@+id/activity_main_tooltipRelativeLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
@@ -59,31 +67,83 @@ protected void onCreate(Bundle savedInstanceState) {
 	                    .withShadow()
 						.withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP);
 	myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
-	myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
+	toolTipRelativeLayout.addView(myToolTipView);
 }
 ```
 	
+
+
+Using an OnboardingTracker
+-----
+
+To make the ToolTip first appear the second time the activity is shown and then show the subsequent
+two times unless the ToolTip is dimissed forever by tapping it use an OnboardingTracker like so:
+
+```java
+    OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_first_button))
+                .withFirstShow(1)
+                .withLastShow(3)
+                .build();
+
+    final ToolTip toolTip = ToolTip toolTip = new ToolTip()
+                .withText("Shows on 2nd to 4th views");
+
+    ToolTipView trackerToolTipView = toolTipRelativeLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
+    toolTipRelativeLayout.addToolTipView(trackerToolTipView);
+```
+
+Creating a ToolTipSequence
+-----
+
+A sequence of ToolTips can be created as follows:
+
+```java
+    final String sequenceId = "sequence";
+    OnboardingTracker sequenceTracker = new OnboardingTracker(this, sequenceId).build();
+    toolTipSequence = new ToolTipSequence(sequenceTracker, toolTipRelativeLayout);
+    // ...
+    // Create simple ToolTipViews as before without Trackers.
+    // ...
+    toolTipSequence.addToSequence(sequenceOneToolTipView);
+    toolTipSequence.addToSequence(sequenceTwoToolTipView);
+```
 
 ToolTip customization
 -----
 You can customize the `ToolTip` in several ways:
 
 * Specify a content text using `ToolTip.setText()`.
-* Set a color using `ToolTip.setColor()`.
+* Set a backround color using `ToolTip.setColor()`.
+* Set the text color using `ToolTip.withTextColor()`.
 * Specify whether to show a shadow or not with `ToolTip.setShadow()`.
 * Specify how to animate the ToolTip: from the view itself or from the top, using `ToolTip.setAnimationType()`.
 * Set your own custom content View using `ToolTip.setContentView()`.
+* Set a delay before the ToolTip is shown with `ToolTip.withDelay()`.
 
-See the examples.
+
+OnboardingTracker customization
+-----
+You can customize the `OnboardingTracker` in several ways:
+
+* A unique id should be used for each tracker which will be used automatically in the shared preferences to track
+its history.
+* To construct a Tracker `build()` must be called following the setting of options.
+* Set the number of times the Tracker must be built before it will allow the ToolTip to show using
+ `withFirstShow()`. It is zero-indexed and defaults to zero.
+* Set the last time the Tracker will allow the ToolTip to show using `withLastShow()`.
+It is zero-indexed and defaults to one.
+* If the ToolTip is clicked and dismissed it will no longer show unless `setDismissedPref(false)`
+is called to reactivate it
+* Alternatively, `setDismissedPref(true)` can be called to stop the ToolTip appearing at any point in the future.
 
 Developed By
 -----
-* Niek Haarman
+* Ryan John
 
 License
 -----
 
-	Copyright 2013 Niek Haarman
+	Copyright 2015 Ryan John
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -96,5 +156,3 @@ License
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-
- [1]: https://play.google.com/store/apps/details?id=com.haarman.supertooltips
