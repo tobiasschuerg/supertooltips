@@ -14,7 +14,7 @@ Add the following to your `build.gradle`:
 
 ```groovy
 dependencies {
-    compile 'com.github.ryanjohn1:onboarding:1.0'
+    compile 'com.github.ryanjohn1:onboarding:1.0.1'
 }
 
 ```
@@ -139,6 +139,9 @@ is called to reactivate it
 Developed By
 -----
 * Ryan John
+
+Forked from the SuperToolTips project by Niek Haarman.
+https://github.com/nhaarman/supertooltips
 
 License
 -----
