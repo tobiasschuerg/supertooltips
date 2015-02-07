@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -29,11 +28,7 @@
         android:paddingRight="8dp"
         android:scrollbars="none">
 
-        <TextView
-            android:id="@+id/tooltip_contenttv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="300dp"/>
+        <include layout="@layout/tooltip_textview"/>
     </FrameLayout>
 
     <View
