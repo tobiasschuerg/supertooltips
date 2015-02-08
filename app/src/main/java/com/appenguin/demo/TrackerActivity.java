@@ -63,6 +63,8 @@ public class TrackerActivity extends Activity implements View.OnClickListener {
     private void addSequenceThreeToolTipView() {
         final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "That is now done");
 
+        final View refreshButton = findViewById(R.id.activity_main_purpletv);
+        refreshButton.setOnClickListener(this);
         ToolTipView sequenceThreeToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
         toolTipSequence.addToSequence(sequenceThreeToolTipView);
     }
@@ -71,9 +73,10 @@ public class TrackerActivity extends Activity implements View.OnClickListener {
         OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_first_button))
                 .withFirstShow(1)
                 .withLastShow(3)
+                .afterInitialOnboarding(true)
                 .build();
 
-        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "Shows on 2nd to 4th views");
+        final ToolTip toolTip = ToolTipFactory.getToolTipWithText(this, "You're already a pro with the top left button. Try this one. Shows on 2nd to 4th views after top left was pressed");
 
         ToolTipView trackerToolTipView = toolTipFrameLayout.showToolTipWithTracker(toolTip, findViewById(R.id.activity_main_orangetv), tracker);
         toolTipFrameLayout.addToolTipView(trackerToolTipView);
@@ -84,7 +87,15 @@ public class TrackerActivity extends Activity implements View.OnClickListener {
         int id = v.getId();
         if (id == R.id.activity_main_redtv) {
             if (delayToolTipView != null) {
-                delayToolTipView.getTracker().setDismissedPref(true);
+                final OnboardingTracker tracker = delayToolTipView.getTracker();
+                tracker.setDismissedPref(true);
+                tracker.setInitialOnboardingComplete(true);
+            }
+        } else if ((id == R.id.activity_main_purpletv)) {
+            if (delayToolTipView != null) {
+                //Restart delayed ToolTip
+                final OnboardingTracker tracker = delayToolTipView.getTracker();
+                tracker.setDismissedPref(false);
             }
         }
     }

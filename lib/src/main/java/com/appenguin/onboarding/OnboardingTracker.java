@@ -10,11 +10,14 @@ public class OnboardingTracker {
 
     private final static String DEFAULT_PREFS = "DEFAULT_PREFS";
     private final static String DISMISSED = "_DISMISSED";
+    private final static String INITIAL_ONBOARDING = "INITIAL_ONBOARDING";
 
     private boolean show = false;
+    private boolean initial = false;
+    private boolean isAfterInitial = false;
     private Context context;
     private String id;
-    private int lastShow = 1;
+    private int lastShow = -1;
     private int firstShow = 0;
 
     /**
@@ -46,16 +49,29 @@ public class OnboardingTracker {
     }
 
     /**
+     * Sets up the tracker to only begin incrementing after the initial onboarding has been completed,
+     * this is signalled by any tracker calling setInitialOnboardingComplete(true).
+     *
+     * @return this OnboardingTracker to build upon.
+     */
+    public OnboardingTracker afterInitialOnboarding(boolean isAfterInitial) {
+        this.isAfterInitial = isAfterInitial;
+        return this;
+    }
+
+    /**
      * The Tracker will calculate whether to show when built based on its history and the first and
      * last show settings.
      *
      * @return this OnboardingTracker to build upon.
      */
     public OnboardingTracker build() {
-        int currentCount = getTrackerCounter();
-        boolean dismissed = getDismissedPref();
-        show = shouldViewShow(currentCount, dismissed);
-        incrementTrackerCounter(currentCount);
+        if (!isAfterInitial || getInitialOnboardingComplete()) {
+            int currentCount = getTrackerCounter();
+            boolean dismissed = getDismissedPref();
+            show = shouldViewShow(currentCount, dismissed);
+            incrementTrackerCounter(currentCount);
+        }
         return this;
     }
 
@@ -63,7 +79,7 @@ public class OnboardingTracker {
         if (dismissed) {
             return false;
         } else {
-            return ((firstShow <= currentCount) && (currentCount <= lastShow));
+            return ((firstShow <= currentCount) && (lastShow == -1 || (currentCount <= lastShow)));
         }
     }
 
@@ -87,8 +103,18 @@ public class OnboardingTracker {
         show = false;
     }
 
-    private boolean getDismissedPref() {
+    public boolean getDismissedPref() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(id + DISMISSED, false);
+    }
+
+    public void setInitialOnboardingComplete(boolean complete) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean(INITIAL_ONBOARDING, complete).commit();
+    }
+
+    public boolean getInitialOnboardingComplete() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(INITIAL_ONBOARDING, false);
     }
 }
