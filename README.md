@@ -14,7 +14,7 @@ Add the following to your `build.gradle`:
 
 ```groovy
 dependencies {
-    compile 'com.github.ryanjohn1:onboarding:1.0.1'
+    compile 'com.github.ryanjohn1:onboarding:1.0.2'
 }
 
 ```
@@ -120,6 +120,9 @@ You can customize the `ToolTip` in several ways:
 * Set your own custom content View using `ToolTip.setContentView()`.
 * Set a delay before the ToolTip is shown with `ToolTip.withDelay()`.
 
+The ToolTip textview can be further customised by creating a tooltip_textview.xml file in your project.
+This will override the default one and allow you to customise that textview such as uses styles or set maxWidth.
+
 
 OnboardingTracker customization
 -----
@@ -131,10 +134,12 @@ its history.
 * Set the number of times the Tracker must be built before it will allow the ToolTip to show using
  `withFirstShow()`. It is zero-indexed and defaults to zero.
 * Set the last time the Tracker will allow the ToolTip to show using `withLastShow()`.
-It is zero-indexed and defaults to one.
+It is zero-indexed and defaults to never stop automatically.
 * If the ToolTip is clicked and dismissed it will no longer show unless `setDismissedPref(false)`
 is called to reactivate it
 * Alternatively, `setDismissedPref(true)` can be called to stop the ToolTip appearing at any point in the future.
+* If there are ToolTips which shouldn't start counting up when to show until initial onboarding has completed
+then set isAfterInitialOnboarding(true).
 
 Developed By
 -----
