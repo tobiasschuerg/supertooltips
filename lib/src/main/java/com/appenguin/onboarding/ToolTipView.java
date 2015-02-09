@@ -121,7 +121,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setLayoutParams(layoutParams);
 
         if (toolTip != null) {
-            applyToolTipPosition();
+            applyToolTipPosition(toolTip.getPosition());
         }
         return true;
     }
@@ -162,12 +162,13 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         }
 
         if (dimensionsKnown) {
-            applyToolTipPosition();
+            applyToolTipPosition(toolTip.getPosition());
         }
     }
 
-    private void applyToolTipPosition() {
+    private void applyToolTipPosition(ToolTip.Position position) {
         final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        final int pointerMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
         final int[] masterViewScreenPosition = new int[2];
         view.getLocationOnScreen(masterViewScreenPosition);
 
@@ -182,7 +183,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         relativeMasterViewX = masterViewScreenPosition[0] - parentViewScreenPosition[0];
         relativeMasterViewY = masterViewScreenPosition[1] - parentViewScreenPosition[1];
-        final int relativeMasterViewCenterX = relativeMasterViewX + masterViewWidth / 2;
+        final int relativeMasterViewCenterX = determineCenterXFromDesiredPosition(position, masterViewWidth);
 
         int toolTipViewAboveY = relativeMasterViewY - getHeight();
         int toolTipViewBelowY = Math.max(0, relativeMasterViewY + masterViewHeight);
@@ -192,8 +193,13 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             toolTipViewX = viewDisplayFrame.right - width - margin;
         }
 
+        int pointerCenterX = Math.max(pointerMargin, relativeMasterViewCenterX);
+        if (pointerCenterX + pointerMargin >= viewDisplayFrame.right) {
+            pointerCenterX = pointerCenterX - pointerMargin;
+        }
+
         setX(toolTipViewX);
-        setPointerCenterX(relativeMasterViewCenterX);
+        setPointerCenterX(pointerCenterX);
 
         final boolean showBelow = toolTipViewAboveY < 0;
 
@@ -239,6 +245,25 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
             animatorSet.start();
         }
+    }
+
+    private int determineCenterXFromDesiredPosition(ToolTip.Position position, int masterViewWidth) {
+        int centerX;
+        switch (position) {
+            case LEFT:
+                centerX = (int) (relativeMasterViewX + getResources().getDimension(R.dimen.tooltip_point_offset));
+                break;
+            case CENTER:
+                centerX = relativeMasterViewX + masterViewWidth / 2;
+                break;
+            case RIGHT:
+                centerX = (int) (relativeMasterViewX + masterViewWidth - getResources().getDimension(R.dimen.tooltip_point_offset));
+                break;
+            default:
+                centerX = relativeMasterViewX + masterViewWidth / 2;
+                break;
+        }
+        return centerX;
     }
 
     public void setPointerCenterX(final int pointerCenterX) {

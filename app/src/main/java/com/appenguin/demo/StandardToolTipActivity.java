@@ -86,6 +86,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
     private void addGreenToolTipView() {
         ToolTip toolTip = new ToolTip()
                 .withText("Another beautiful Button!")
+                .withPosition(ToolTip.Position.RIGHT)
                 .withColor(getResources().getColor(R.color.holo_green));
 
         greenToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_greentv));
@@ -96,6 +97,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
     private void addBlueToolTipView() {
         ToolTip toolTip = new ToolTip()
                 .withText("Moarrrr buttons!")
+                .withPosition(ToolTip.Position.LEFT)
                 .withColor(getResources().getColor(R.color.holo_blue))
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
@@ -118,6 +120,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
     private void addOrangeToolTipView() {
         ToolTip toolTip = new ToolTip()
                 .withText("Tap me!")
+                .withPosition(ToolTip.Position.LEFT)
                 .withColor(getResources().getColor(R.color.holo_orange));
 
         orangeToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_orangetv));

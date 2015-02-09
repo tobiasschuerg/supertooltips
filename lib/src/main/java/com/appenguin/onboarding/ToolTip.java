@@ -20,23 +20,32 @@ import android.view.View;
 
 public class ToolTip {
 
+
+
     public enum AnimationType {
         FROM_MASTER_VIEW,
         FROM_TOP,
-        NONE
+        NONE;
     }
 
+
+    public enum Position {
+        LEFT,
+        CENTER,
+        RIGHT;
+    }
     private CharSequence mText;
 
     private int textResId;
+
     private int color;
     private int textColor;
     private View contentView;
     private AnimationType animationType;
+    private Position position;
     private boolean shouldShowShadow;
     private Typeface typeface;
-    private int delayInMilliseconds = 0;
-
+    private int delayInMilliseconds;
     /**
      * Creates a new ToolTip without any values.
      */
@@ -47,6 +56,8 @@ public class ToolTip {
         color = 0;
         contentView = null;
         animationType = AnimationType.FROM_MASTER_VIEW;
+        position = Position.CENTER;
+        delayInMilliseconds = 0;
     }
 
     /**
@@ -160,6 +171,16 @@ public class ToolTip {
         this.typeface = typeface;
     }
 
+    /**
+     * Position of the ToolTip relative to the target view.
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withPosition(Position position) {
+        this.position = position;
+        return this;
+    }
+
     public CharSequence getText() {
         return mText;
     }
@@ -197,5 +218,9 @@ public class ToolTip {
 
     public int getDelayInMilliseconds() {
         return delayInMilliseconds;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }
