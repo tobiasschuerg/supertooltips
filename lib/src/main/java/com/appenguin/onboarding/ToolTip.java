@@ -43,6 +43,7 @@ public class ToolTip {
     private View contentView;
     private AnimationType animationType;
     private Position position;
+    private boolean showBelow;
     private boolean shouldShowShadow;
     private Typeface typeface;
     private int delayInMilliseconds;
@@ -55,6 +56,7 @@ public class ToolTip {
         textResId = 0;
         color = 0;
         contentView = null;
+        showBelow = false;
         animationType = AnimationType.FROM_MASTER_VIEW;
         position = Position.CENTER;
         delayInMilliseconds = 0;
@@ -111,6 +113,16 @@ public class ToolTip {
      */
     public ToolTip withTextColor(final int color) {
         textColor = color;
+        return this;
+    }
+
+    /**
+     * attempt to place the tooltip below the target.
+     *
+     * @return this ToolTip to build upon.
+     */
+    public ToolTip withShowBelow() {
+        showBelow = true;
         return this;
     }
 
@@ -222,5 +234,9 @@ public class ToolTip {
 
     public Position getPosition() {
         return position;
+    }
+
+    public boolean getShowBelow() {
+      return showBelow;
     }
 }

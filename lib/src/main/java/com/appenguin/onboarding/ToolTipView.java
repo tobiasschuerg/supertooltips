@@ -201,7 +201,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         setX(toolTipViewX);
         setPointerCenterX(pointerCenterX);
 
-        final boolean showBelow = toolTipViewAboveY < 0;
+        final boolean showBelow = toolTip.getShowBelow() || toolTipViewAboveY < 0;
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             ViewHelper.setAlpha(topPointerView, showBelow ? 1 : 0);
