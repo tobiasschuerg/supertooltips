@@ -14,7 +14,7 @@ Add the following to your `build.gradle`:
 
 ```groovy
 dependencies {
-    compile 'com.github.ryanjohn1:onboarding:1.0.4'
+    compile 'com.github.ryanjohn1:onboarding:1.0.5'
 }
 
 ```
@@ -77,7 +77,7 @@ Using an OnboardingTracker
 -----
 
 To make the ToolTip first appear the second time the activity is shown and then show the subsequent
-two times unless the ToolTip is dimissed forever by tapping it use an OnboardingTracker like so:
+two times, unless the ToolTip is dismissed forever by tapping it, use an OnboardingTracker like so:
 
 ```java
     OnboardingTracker tracker = new OnboardingTracker(this, getString(R.string.tracker_first_button))
