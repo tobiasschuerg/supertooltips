@@ -19,12 +19,14 @@ public class OnboardingTracker {
     private String id;
     private int lastShow = -1;
     private int firstShow = 0;
+    private final SharedPreferences sharedPreferences;
 
     /**
      * Creates a new OnboardingTracker with an id used to save the history in shared preferences.
      */
     public OnboardingTracker (Context context, String id) {
         this.context = context;
+        sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
         this.id = id;
     }
 
@@ -84,13 +86,11 @@ public class OnboardingTracker {
     }
 
     private int getTrackerCounter() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(id, 0);
     }
 
     private void incrementTrackerCounter(int currentCount) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putInt(id, currentCount + 1).commit();
+        sharedPreferences.edit().putInt(id, currentCount + 1).apply();
     }
 
     public boolean shouldShow() {
@@ -98,23 +98,19 @@ public class OnboardingTracker {
     }
 
     public void setDismissedPref(boolean dismissed) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(id + DISMISSED, dismissed).commit();
+        sharedPreferences.edit().putBoolean(id + DISMISSED, dismissed).apply();
         show = false;
     }
 
     public boolean getDismissedPref() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(id + DISMISSED, false);
     }
 
     public void setInitialOnboardingComplete(boolean complete) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(INITIAL_ONBOARDING, complete).commit();
+        sharedPreferences.edit().putBoolean(INITIAL_ONBOARDING, complete).apply();
     }
 
     public boolean getInitialOnboardingComplete() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DEFAULT_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(INITIAL_ONBOARDING, false);
     }
 }
