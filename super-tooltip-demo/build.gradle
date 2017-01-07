@@ -1,0 +1,9 @@
+apply plugin: 'com.android.application'
+apply from: "../gradle-fury/gradle/android-support.gradle"
+
+android {
+}
+
+dependencies {
+    compile project(':super-tooltip-aar')
+}

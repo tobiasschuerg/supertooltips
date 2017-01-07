@@ -1,1 +1,2 @@
-include ':lib', ':app'
+include ':super-tooltip-aar'
+include ':super-tooltip-demo'

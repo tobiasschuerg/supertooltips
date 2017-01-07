@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+apply from: "../gradle-fury/gradle/android-support.gradle"
+
+android {
+   }
+
+dependencies {
+    compile 'com.nineoldandroids:library:2.4.0'
+}

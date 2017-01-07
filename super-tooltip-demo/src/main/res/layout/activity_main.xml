@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Long press an icon for a tip"
+        android:textColor="@android:color/white"
+        />
+
+
+
+
+        <Button
+            android:id="@+id/tooltip_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
+            android:text="@string/tooltip_examples"
+            android:textColor="@android:color/white"
+            />
+
+
+
+
+    <Button
+        android:id="@+id/tracker_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tooltip_activity"
+        android:text="@string/tracker_examples"
+        android:textColor="@android:color/white"
+        />
+    <ImageButton
+        android:id="@+id/helpButtonForToolTipExample"
+        android:layout_toRightOf="@id/tracker_activity"
+        android:layout_alignTop="@id/tracker_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/helpbrowser37px"/>
+    <Button
+        android:id="@+id/listview_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tracker_activity"
+        android:text="@string/listview_examples"
+        android:textColor="@android:color/white"
+        />
+    <ImageButton
+        android:id="@+id/helpButtonForListview_activity"
+        android:layout_toRightOf="@id/listview_activity"
+        android:layout_alignTop="@id/listview_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/helpbrowser37px"/>
+
+    <com.spyhunter99.supertooltips.ToolTipRelativeLayout
+        android:id="@+id/activity_main_tooltipframelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>
