@@ -29,7 +29,13 @@
             android:text="@string/tooltip_examples"
             android:textColor="@android:color/white"
             />
-
+    <ImageButton
+        android:id="@+id/helpButtonForListview_activity"
+        android:layout_toRightOf="@id/tooltip_activity"
+        android:layout_alignTop="@id/tooltip_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/helpbrowser37px"/>
 
 
 
@@ -56,13 +62,7 @@
         android:text="@string/listview_examples"
         android:textColor="@android:color/white"
         />
-    <ImageButton
-        android:id="@+id/helpButtonForListview_activity"
-        android:layout_toRightOf="@id/listview_activity"
-        android:layout_alignTop="@id/listview_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/helpbrowser37px"/>
+
 
     <com.spyhunter99.supertooltips.ToolTipRelativeLayout
         android:id="@+id/activity_main_tooltipframelayout"

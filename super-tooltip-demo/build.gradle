@@ -2,8 +2,37 @@ apply plugin: 'com.android.application'
 apply from: "../gradle-fury/gradle/android-support.gradle"
 
 android {
+    defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        unitTests.all {
+            // All the usual Gradle options.
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+    }
+
 }
 
 dependencies {
     compile project(':super-tooltip-aar')
+    compile 'com.android.support:support-annotations:23+'
+
+    //crash logging
+    compile 'ch.acra:acra:4.7.0'
+
+    //memory leak testing
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+
+    //on device testing
+    androidTestCompile 'com.android.support:support-annotations:23+'
+    androidTestCompile 'com.android.support.test:runner:0.4.+'
+    androidTestCompile 'com.android.support.test:rules:0.4.+'
 }
