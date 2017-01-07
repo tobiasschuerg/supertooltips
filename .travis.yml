@@ -32,6 +32,7 @@ android:
 
 sudo: required
 
+
 # fun fact, travis doesn't really support multiple AVDs running currently for a single build (tried it, build timed out constantly while starting up the AVDs)
 # thus we're using a build matrix (which makes more sense anyhow)
 env:
