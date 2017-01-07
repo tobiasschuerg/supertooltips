@@ -1,11 +1,21 @@
 SuperToolTips (Discontinued)
 ===========
-[Play Store Demo][1] [![Build Status](https://travis-ci.org/nhaarman/supertooltips.svg?branch=master)](https://travis-ci.org/nhaarman/supertooltips)
+[![Build Status](https://travis-ci.org/spyhunter/supertooltips.svg?branch=master)](https://travis-ci.org/spyhunter99/supertooltips)
 
-*This project has been abandoned. Feel free to fork this project, though no support will be given.*
+*This project was forked from https://github.com/ryanjohn1/onboarding, which was forked from https://github.com/nhaarman/supertooltips
 
 SuperToolTips is an Open Source Android library that allows developers to easily create Tool Tips for views.
 Feel free to use it all you want in your Android apps provided that you cite this project and include the license in your app.
+
+Changes/Delta from the original forks
+ - No layouts changes are necessary
+ - Significant reduction in boilerplate code
+ - Simpler and easier to use
+ - Fix for adding tooltips on list view items
+ - Most APIs remain the same so migration should be straight forward
+ - Fix for memory leaks
+ - Multiple tool tip click listeners
+
 
 Setup
 -----
@@ -24,45 +34,51 @@ dependencies {
 Usage
 -----
 
-* In your layout xml file, add the `ToolTipRelativeLayout` (`com.nhaarman.supertooltips.ToolTipRelativeLayout`) with height and width of `match_parent`. Make sure this view is on top!
-* Find the `ToolTipRelativeLayout` in your code, and start adding `ToolTips`!
+In your activity, add this
+````
+import com.spyhunter99.supertooltips.ToolTipManager;
 
-Example:
------
-```java
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+public class MyActivity extends Activity {
+    ToolTipManager tooltips;
 
-	<TextView
-	    android:id="@+id/activity_main_redtv"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true" />
 
-	<com.nhaarman.supertooltips.ToolTipRelativeLayout
-		android:id="@+id/activity_main_tooltipRelativeLayout"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
-</RelativeLayout>
+    public void onCreate(Bundle saved) {
+        super.onCreate(saved);
+        //setContentView(...);
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.activity_main);
-	
-	ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
-		
-	ToolTip toolTip = new ToolTip()
-	                    .withText("A beautiful View")
-	                    .withColor(Color.RED)
-	                    .withShadow()
-						.withAnimationType(ToolTip.ANIMATIONTYPE_FROMTOP);
-	myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
-	myToolTipView.setOnToolTipViewClickedListener(MainActivity.this);
-}
-```
+        tooltips = new ToolTipManager(this);
+        //your stuff goes here....
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        tooltips.onDestroy();
+        tooltips = null;
+    }
+
+    //....
+ }
+
+````
+
+Then if you had a button somewhere in your layout that you wanted a tooltip on long press...
+
+````
+//in onCreate
+findViewById(R.id.listview_activity).setOnLongClickListener(new View.OnLongClickListener() {
+    @Override
+    public boolean onLongClick(View v) {
+        ToolTip toolTip = new ToolTip()
+            .withText("A demo for tooltips on list view items")
+            .withColor(Color.RED) //or whatever you want
+            .withAnimationType(ToolTip.AnimationType.FROM_MASTER_VIEW)
+            .withShadow();
+        tooltips.showToolTip(toolTip, v);
+        return true;
+    }
+});
+
+````
 	
 
 ToolTip customization
@@ -79,7 +95,9 @@ See the examples.
 
 Developed By
 -----
-* Niek Haarman
+* Alex O'Ree - this fork
+* Niek Haarman https://github.com/nhaarman/supertooltips
+* Ryan John https://github.com/ryanjohn1/onboarding
 
 License
 -----
@@ -96,4 +114,3 @@ License
 	See the License for the specific language governing permissions and
 	limitations under the License.
 
- [1]: https://play.google.com/store/apps/details?id=com.haarman.supertooltips

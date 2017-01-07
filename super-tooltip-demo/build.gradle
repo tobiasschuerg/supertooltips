@@ -3,6 +3,7 @@ apply from: "../gradle-fury/gradle/android-support.gradle"
 
 android {
     defaultConfig {
+        applicationId 'com.spyhunter99.supertooltips.demo'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

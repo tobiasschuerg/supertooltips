@@ -20,7 +20,7 @@ public class ToolTipSequence implements ToolTipView.OnToolTipViewClickedListener
         if (sequence.isEmpty() && tracker.shouldShow()) {
             startToolTipView(toolTipView);
         }
-        toolTipView.setOnToolTipViewClickedListener(this);
+        toolTipView.addOnToolTipViewClickedListener(this);
         sequence.add(toolTipView);
     }
 

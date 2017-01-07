@@ -63,14 +63,5 @@
         android:textColor="@android:color/white"
         />
 
-    <Button
-        android:id="@+id/nolayoutchanges_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/listview_activity"
-        android:text="Demo without changing your layouts"
-        android:textColor="@android:color/white"
-        />
-
 
 </RelativeLayout>

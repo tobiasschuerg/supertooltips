@@ -79,7 +79,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
                 .withShadow();
 
         redToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_redtv));
-        redToolTipView.setOnToolTipViewClickedListener(this);
+        redToolTipView.addOnToolTipViewClickedListener(this);
         toolTipFrameLayout.addView(redToolTipView);
     }
 
@@ -90,7 +90,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
                 .withColor(getResources().getColor(R.color.holo_green));
 
         greenToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_greentv));
-        greenToolTipView.setOnToolTipViewClickedListener(this);
+        greenToolTipView.addOnToolTipViewClickedListener(this);
         toolTipFrameLayout.addView(greenToolTipView);
     }
 
@@ -102,7 +102,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
         blueToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_bluetv));
-        blueToolTipView.setOnToolTipViewClickedListener(this);
+        blueToolTipView.addOnToolTipViewClickedListener(this);
         toolTipFrameLayout.addView(blueToolTipView);
     }
 
@@ -113,7 +113,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
                 .withAnimationType(ToolTip.AnimationType.NONE);
 
         purpleToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_purpletv));
-        purpleToolTipView.setOnToolTipViewClickedListener(this);
+        purpleToolTipView.addOnToolTipViewClickedListener(this);
         toolTipFrameLayout.addView(purpleToolTipView);
     }
 
@@ -124,7 +124,7 @@ public class StandardToolTipActivity extends Activity implements View.OnClickLis
                 .withColor(getResources().getColor(R.color.holo_orange));
 
         orangeToolTipView = toolTipFrameLayout.showToolTipForView(toolTip, findViewById(R.id.activity_main_orangetv));
-        orangeToolTipView.setOnToolTipViewClickedListener(this);
+        orangeToolTipView.addOnToolTipViewClickedListener(this);
         toolTipFrameLayout.addView(orangeToolTipView);
     }
 

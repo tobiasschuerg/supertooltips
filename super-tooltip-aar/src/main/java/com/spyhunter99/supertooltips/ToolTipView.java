@@ -39,6 +39,8 @@ import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A ViewGroup to visualize ToolTips. Use
@@ -72,7 +74,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     private int relativeMasterViewX;
     private int width;
 
-    private OnToolTipViewClickedListener listener;
+    protected List<OnToolTipViewClickedListener> listener = new ArrayList<>();
 
     public ToolTipView(final Context context) {
         super(context);
@@ -116,9 +118,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         width = contentHolder.getWidth();
 
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
         layoutParams.width = width;
-        setLayoutParams(layoutParams);
+        setLayoutParams((ViewGroup.LayoutParams) layoutParams);
 
         if (toolTip != null) {
             applyToolTipPosition(toolTip.getPosition());
@@ -273,8 +275,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         ViewHelper.setX(bottomPointerView, pointerCenterX - pointerWidth / 2 - (int) getX());
     }
 
-    public void setOnToolTipViewClickedListener(final OnToolTipViewClickedListener listener) {
-        this.listener = listener;
+    public void addOnToolTipViewClickedListener(final OnToolTipViewClickedListener listener) {
+        this.listener.add(listener);
     }
 
     public void setColor(final int color) {
@@ -300,13 +302,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             setLayoutParams(params);
         }
 
-        if (toolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
+
+        if (toolTip!=null && toolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
             if (getParent() != null) {
                 ((ViewManager) getParent()).removeView(this);
             }
         } else {
             Collection<Animator> animators = new ArrayList<>(5);
-            if (toolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
+            if (toolTip!=null && toolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
                 animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, (int) getY(), relativeMasterViewY + view.getHeight() / 2 - getHeight() / 2));
                 animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_X_COMPAT, (int) getX(), relativeMasterViewX + view.getWidth() / 2 - width / 2));
             } else {
@@ -332,9 +335,35 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             tracker.setDismissedPref(true);
         }
 
-        if (listener != null) {
-            listener.onToolTipViewClicked(this);
+        if (listener != null && !listener.isEmpty()) {
+            Iterator<OnToolTipViewClickedListener> iterator = listener.iterator();
+            while (iterator.hasNext()){
+                try {
+                    iterator.next().onToolTipViewClicked(this);
+                }catch (Throwable t){
+                    t.printStackTrace();
+                }
+            }
+
         }
+        destroy();
+    }
+
+    public void destroy() {
+        tracker=null;
+        listener=null;
+        topPointerView=null;
+        topFrame=null;
+        contentHolder=null;
+        toolTipTV=null;
+        bottomFrame=null;
+        bottomPointerView=null;
+        shadowView=null;
+        toolTip=null;
+        view=null;
+        if (listener!=null)
+            listener.clear();
+        listener=null;
     }
 
     /**
