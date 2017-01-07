@@ -15,6 +15,7 @@ Changes/Delta from the original forks
  - Most APIs remain the same so migration should be straight forward
  - Fix for memory leaks
  - Multiple tool tip click listeners
+ - MinSdkVersion is 8
 
 
 Setup

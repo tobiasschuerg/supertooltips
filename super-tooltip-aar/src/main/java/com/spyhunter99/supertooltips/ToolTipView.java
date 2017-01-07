@@ -455,12 +455,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         @Override
         @SuppressLint("NewApi")
         public void onAnimationEnd(final Animator animation) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-            params.leftMargin = (int) toolTipViewX;
-            params.topMargin = (int) toolTipViewY;
+            if (getLayoutParams() instanceof RelativeLayout.LayoutParams) {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                params.leftMargin = (int) toolTipViewX;
+                params.topMargin = (int) toolTipViewY;
+            }
             setX(0);
             setY(0);
-            setLayoutParams(params);
+            setLayoutParams(getLayoutParams());
         }
 
         @Override
