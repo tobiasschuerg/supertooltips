@@ -13,7 +13,7 @@
     <string name="action_settings">Settings</string>
     <string name="tooltip_examples">ToolTip Examples</string>
     <string name="tracker_examples">Tracker Examples</string>
-    <string name="listview_examples">Listview Examples (broken)</string>
+    <string name="listview_examples">Listview Examples</string>
     <string name="title_activity_list">ListActivity</string>
     <string name="default_text">Default Text</string>
     <string name="tracker_list">TRACKER_LIST</string>

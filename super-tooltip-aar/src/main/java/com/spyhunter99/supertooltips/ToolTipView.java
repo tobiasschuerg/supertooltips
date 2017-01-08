@@ -20,12 +20,14 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -48,6 +50,7 @@ import java.util.List;
  */
 public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
 
+    static final String TAG = "ToolTipView";
     public static final String TRANSLATION_Y_COMPAT = "translationY";
     public static final String TRANSLATION_X_COMPAT = "translationX";
     public static final String SCALE_X_COMPAT = "scaleX";
@@ -120,8 +123,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         layoutParams.width = width;
-        setLayoutParams((ViewGroup.LayoutParams) layoutParams);
-
+        setLayoutParams(layoutParams);
+        if (getParent()==null)
+            return false;
         if (toolTip != null) {
             applyToolTipPosition(toolTip.getPosition());
         }
@@ -178,7 +182,9 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         view.getWindowVisibleDisplayFrame(viewDisplayFrame);
 
         final int[] parentViewScreenPosition = new int[2];
-        ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
+        if (getParent()!=null){
+            ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
+        }
 
         final int masterViewWidth = view.getWidth();
         final int masterViewHeight = view.getHeight();
@@ -300,6 +306,15 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
                 setY(params.topMargin);
                 params.leftMargin = 0;
                 params.topMargin = 0;
+            } else if (getLayoutParams() instanceof android.widget.FrameLayout.LayoutParams){
+                android.widget.FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) getLayoutParams();
+                setX(p.leftMargin);
+                setY(p.topMargin);
+                p.leftMargin = 0;
+                p.topMargin = 0;
+            } else {
+                //crap, happens on api10
+                Log.d(TAG, "Remove layouts params was of type " + getLayoutParams().getClass().toString());
             }
             setLayoutParams(getLayoutParams());
         }
@@ -372,7 +387,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
      * Convenience method for getting X.
      */
     @SuppressLint("NewApi")
-    @Override
+    //@Override
     public float getX() {
         float result;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -387,7 +402,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
      * Convenience method for setting X.
      */
     @SuppressLint("NewApi")
-    @Override
+    //@Override
     public void setX(final float x) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             super.setX(x);
@@ -400,7 +415,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
      * Convenience method for getting Y.
      */
     @SuppressLint("NewApi")
-    @Override
+    //@Override
     public float getY() {
         float result;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -415,7 +430,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
      * Convenience method for setting Y.
      */
     @SuppressLint("NewApi")
-    @Override
+    //@Override
     public void setY(final float y) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             super.setY(y);
@@ -461,9 +476,13 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
                 params.leftMargin = (int) toolTipViewX;
                 params.topMargin = (int) toolTipViewY;
+            } else if (getLayoutParams() instanceof android.widget.FrameLayout.LayoutParams){
+                android.widget.FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) getLayoutParams();
+                p.leftMargin = (int) toolTipViewX;
+                p.topMargin = (int) toolTipViewY;
+            } else {
+                Log.d(TAG, "onAnimationEnd layout was type " + getLayoutParams().getClass().toString());
             }
-            setX(0);
-            setY(0);
             setLayoutParams(getLayoutParams());
         }
 
