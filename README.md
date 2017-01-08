@@ -1,4 +1,4 @@
-SuperToolTips (Discontinued)
+SuperToolTips (no longer discontinued!)
 ===========
 [![Build Status](https://travis-ci.org/spyhunter/supertooltips.svg?branch=master)](https://travis-ci.org/spyhunter99/supertooltips)
 
@@ -24,11 +24,13 @@ Setup
 
 Add the following to your `build.gradle`:
 
-# NOT YET PUBLISHED
+# Last version
+
+Published 1/6/2017, v4.0.0
 
 ```groovy
 dependencies {
-    compile 'com.github.spyhunter99:super-tooltip-aar:4.0.0-SNAPSHOT'
+    compile 'com.github.spyhunter99:super-tooltip-aar:4.0.0'
 }
 
 ```
