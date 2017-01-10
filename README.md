@@ -1,6 +1,8 @@
 SuperToolTips (no longer discontinued!)
 ===========
 [![Build Status](https://travis-ci.org/spyhunter99/supertooltips.svg?branch=master)](https://travis-ci.org/spyhunter99/supertooltips)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.spyhunter99/super-tooltip-aar/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.spyhunter99/super-tooltip-aar)
+
 
 *This project was forked from https://github.com/ryanjohn1/onboarding, which was forked from https://github.com/nhaarman/supertooltips
 
