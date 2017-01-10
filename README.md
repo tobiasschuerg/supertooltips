@@ -1,6 +1,6 @@
 SuperToolTips (no longer discontinued!)
 ===========
-[![Build Status](https://travis-ci.org/spyhunter/supertooltips.svg?branch=master)](https://travis-ci.org/spyhunter99/supertooltips)
+[![Build Status](https://travis-ci.org/spyhunter99/supertooltips.svg?branch=master)](https://travis-ci.org/spyhunter99/supertooltips)
 
 *This project was forked from https://github.com/ryanjohn1/onboarding, which was forked from https://github.com/nhaarman/supertooltips
 
