@@ -72,5 +72,15 @@
         android:textColor="@android:color/white"
         />
 
+    <Button
+        android:id="@+id/issue5test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nolayoutchanges_activity"
+        android:text="Test case for issue 5"
+        android:textColor="@android:color/white"
+        />
+
+
 
 </RelativeLayout>

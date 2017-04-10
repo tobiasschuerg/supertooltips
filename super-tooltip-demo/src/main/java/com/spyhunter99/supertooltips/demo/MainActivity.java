@@ -29,6 +29,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
 
         findViewById(R.id.tooltip_activity).setOnLongClickListener(this);
         findViewById(R.id.tracker_activity).setOnLongClickListener(this);
+        findViewById(R.id.issue5test).setOnClickListener(this);
 
         //in onCreate
         findViewById(R.id.listview_activity).setOnLongClickListener(new View.OnLongClickListener() {
@@ -77,6 +78,12 @@ public class MainActivity extends Activity implements View.OnClickListener, View
             case R.id.helpButtonForListview_activity:
                 showHelpForView(R.id.tooltip_activity);
                 break;
+            case R.id.issue5test:
+            {
+                Intent i = new Intent(MainActivity.this, BugActivity.class);
+                startActivity(i);
+                break;
+            }
         }
     }
 

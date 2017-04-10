@@ -119,6 +119,8 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         getViewTreeObserver().removeOnPreDrawListener(this);
         dimensionsKnown = true;
 
+        if (contentHolder==null)
+            return false;
         width = contentHolder.getWidth();
 
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
