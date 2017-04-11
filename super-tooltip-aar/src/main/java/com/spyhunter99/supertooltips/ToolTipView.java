@@ -41,7 +41,6 @@ import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,28 +50,29 @@ import java.util.List;
 public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreDrawListener, View.OnClickListener {
 
     static final String TAG = "ToolTipView";
+
     public static final String TRANSLATION_Y_COMPAT = "translationY";
     public static final String TRANSLATION_X_COMPAT = "translationX";
-    public static final String SCALE_X_COMPAT = "scaleX";
-    public static final String SCALE_Y_COMPAT = "scaleY";
-    public static final String ALPHA_COMPAT = "alpha";
+    public static final String SCALE_X_COMPAT       = "scaleX";
+    public static final String SCALE_Y_COMPAT       = "scaleY";
+    public static final String ALPHA_COMPAT         = "alpha";
 
     private ImageView topPointerView;
-    private View topFrame;
+    private View      topFrame;
     private ViewGroup contentHolder;
-    private TextView toolTipTV;
-    private View bottomFrame;
+    private TextView  toolTipTV;
+    private View      bottomFrame;
     private ImageView bottomPointerView;
-    private View shadowView;
+    private View      shadowView;
 
     private boolean initialised = false;
 
     private OnboardingTracker tracker;
-    private ToolTip toolTip;
-    private View view;
+    private ToolTip           toolTip;
+    private View              view;
 
     private boolean dimensionsKnown;
-    private int relativeMasterViewY;
+    private int     relativeMasterViewY;
 
     private int relativeMasterViewX;
     private int width;
@@ -119,15 +119,17 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         getViewTreeObserver().removeOnPreDrawListener(this);
         dimensionsKnown = true;
 
-        if (contentHolder==null)
+        if (contentHolder == null) {
             return false;
+        }
         width = contentHolder.getWidth();
 
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         layoutParams.width = width;
         setLayoutParams(layoutParams);
-        if (getParent()==null)
+        if (getParent() == null) {
             return false;
+        }
         if (toolTip != null) {
             applyToolTipPosition(toolTip.getPosition());
         }
@@ -184,7 +186,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         view.getWindowVisibleDisplayFrame(viewDisplayFrame);
 
         final int[] parentViewScreenPosition = new int[2];
-        if (getParent()!=null){
+        if (getParent() != null) {
             ((View) getParent()).getLocationOnScreen(parentViewScreenPosition);
         }
 
@@ -235,8 +237,14 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             Collection<Animator> animators = new ArrayList<>(5);
 
             if (toolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
-                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, relativeMasterViewY + view.getHeight() / 2 - getHeight() / 2, toolTipViewY));
-                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_X_COMPAT, relativeMasterViewX + view.getWidth() / 2 - width / 2, toolTipViewX));
+                animators.add(ObjectAnimator.ofFloat(this,
+                                                     TRANSLATION_Y_COMPAT,
+                                                     relativeMasterViewY + view.getHeight() / 2 - getHeight() / 2,
+                                                     toolTipViewY));
+                animators.add(ObjectAnimator.ofFloat(this,
+                                                     TRANSLATION_X_COMPAT,
+                                                     relativeMasterViewX + view.getWidth() / 2 - width / 2,
+                                                     toolTipViewX));
             } else if (toolTip.getAnimationType() == ToolTip.AnimationType.FROM_TOP) {
                 animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, 0, toolTipViewY));
             }
@@ -302,13 +310,13 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
     public void remove() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            if (getLayoutParams() instanceof RelativeLayout.LayoutParams ) {
+            if (getLayoutParams() instanceof RelativeLayout.LayoutParams) {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
                 setX(params.leftMargin);
                 setY(params.topMargin);
                 params.leftMargin = 0;
                 params.topMargin = 0;
-            } else if (getLayoutParams() instanceof android.widget.FrameLayout.LayoutParams){
+            } else if (getLayoutParams() instanceof android.widget.FrameLayout.LayoutParams) {
                 android.widget.FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) getLayoutParams();
                 setX(p.leftMargin);
                 setY(p.topMargin);
@@ -322,15 +330,21 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         }
 
 
-        if (toolTip!=null && toolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
+        if (toolTip != null && toolTip.getAnimationType() == ToolTip.AnimationType.NONE) {
             if (getParent() != null) {
                 ((ViewManager) getParent()).removeView(this);
             }
         } else {
             Collection<Animator> animators = new ArrayList<>(5);
-            if (toolTip!=null && toolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
-                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, (int) getY(), relativeMasterViewY + view.getHeight() / 2 - getHeight() / 2));
-                animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_X_COMPAT, (int) getX(), relativeMasterViewX + view.getWidth() / 2 - width / 2));
+            if (toolTip != null && toolTip.getAnimationType() == ToolTip.AnimationType.FROM_MASTER_VIEW) {
+                animators.add(ObjectAnimator.ofFloat(this,
+                                                     TRANSLATION_Y_COMPAT,
+                                                     (int) getY(),
+                                                     relativeMasterViewY + view.getHeight() / 2 - getHeight() / 2));
+                animators.add(ObjectAnimator.ofFloat(this,
+                                                     TRANSLATION_X_COMPAT,
+                                                     (int) getX(),
+                                                     relativeMasterViewX + view.getWidth() / 2 - width / 2));
             } else {
                 animators.add(ObjectAnimator.ofFloat(this, TRANSLATION_Y_COMPAT, getY(), 0));
             }
@@ -355,11 +369,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
         }
 
         if (listener != null && !listener.isEmpty()) {
-            Iterator<OnToolTipViewClickedListener> iterator = listener.iterator();
-            while (iterator.hasNext()){
+            for (OnToolTipViewClickedListener aListener : listener) {
                 try {
-                    iterator.next().onToolTipViewClicked(this);
-                }catch (Throwable t){
+                    aListener.onToolTipViewClicked(this);
+                } catch (Throwable t) {
                     t.printStackTrace();
                 }
             }
@@ -369,20 +382,20 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     public void destroy() {
-        tracker=null;
-        listener=null;
-        topPointerView=null;
-        topFrame=null;
-        contentHolder=null;
-        toolTipTV=null;
-        bottomFrame=null;
-        bottomPointerView=null;
-        shadowView=null;
-        toolTip=null;
-        view=null;
-        if (listener!=null)
+        tracker = null;
+        topPointerView = null;
+        topFrame = null;
+        contentHolder = null;
+        toolTipTV = null;
+        bottomFrame = null;
+        bottomPointerView = null;
+        shadowView = null;
+        toolTip = null;
+        view = null;
+        if (listener != null) {
             listener.clear();
-        listener=null;
+        }
+        listener = null;
     }
 
     /**
@@ -478,7 +491,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
                 params.leftMargin = (int) toolTipViewX;
                 params.topMargin = (int) toolTipViewY;
-            } else if (getLayoutParams() instanceof android.widget.FrameLayout.LayoutParams){
+            } else if (getLayoutParams() instanceof android.widget.FrameLayout.LayoutParams) {
                 android.widget.FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) getLayoutParams();
                 p.leftMargin = (int) toolTipViewX;
                 p.topMargin = (int) toolTipViewY;
