@@ -309,6 +309,10 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
     }
 
     public void remove() {
+        if (!dimensionsKnown) {
+            // This tooltip wasn't set up completely so we skip removing.
+            setVisibility(GONE);
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             if (getLayoutParams() instanceof RelativeLayout.LayoutParams) {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
